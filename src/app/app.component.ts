@@ -1,9 +1,18 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'; 
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import * as firebase from 'firebase';
+import { HomePage } from '../pages/home/home'; 
 
-import { HomePage } from '../pages/home/home';
+const config = {
+  apiKey: 'AIzaSyBd8bzZrmOyeRPEcLDGHxW9JGMHX4K6D68',
+  authDomain: 'ionicpositiontracker.firebaseapp.com', //YOUR_PROJECT_ID.firebaseapp.com
+  databaseURL: 'https://ionicpositiontracker.firebaseio.com/', //https://ionicpositiontracker.firebaseio.com/
+  projectId: 'ionicpositiontracker',       
+  storageBucket: 'gs://ionicpositiontracker.appspot.com', // gs://YOUR_PROJECT_ID.appspot.com
+};
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -17,6 +26,12 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+    firebase.initializeApp(config);
   }
 }
 
+// ionic cordova platform rm android
+// ionic cordova platform add android
+// ionic cordova run android
+// ionic cordova platform rm ios
+// ionic cordova patform add ios
