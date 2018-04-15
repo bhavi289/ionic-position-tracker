@@ -24,26 +24,27 @@ export class HomePage {
   }
   ionViewDidLoad(){
     // console.log('Starting Geolocation');
-    this.initMap();
 
-    // var options = {
-    //     enableHighAccuracy: true
-    // };
+    var options = {
+        enableHighAccuracy: true
+    };
 
-    // this.geolocation.getCurrentPosition(options)
-    // .then((position) => {
-    //     console.log('Geolocation successful');
+    this.geolocation.getCurrentPosition(options)
+    .then((position) => {
+        console.log('Geolocation successful');
 
-    //     // this.currentLocation = {
-    //         this.lat= position.coords.latitude,
-    //         this.lng= position.coords.longitude
-    //     // };
+        // this.currentLocation = {
+            this.lat= position.coords.latitude,
+            this.lng= position.coords.longitude
+        // };
 
-    //     let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
+        let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
 
-    //     // this.updatePlaces(query);
+        // this.updatePlaces(query);
 
-    // })
+      })
+      this.initMap();
+    
   }
 
   initMap() {
@@ -99,11 +100,11 @@ export class HomePage {
         center: mylocation
       });
     });
-    let watch = this.geolocation.watchPosition();
+    let watch = this.geolocation.watchPosition(); 
     watch.subscribe((data) => {
       this.deleteMarkers();
       let updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
-      let image = 'assets/imgs/logo.png';
+      let image = 'assets/imgs/blue-bike.png';
       this.addMarker(updatelocation,image);
       this.setMapOnAll(this.map);
     });
