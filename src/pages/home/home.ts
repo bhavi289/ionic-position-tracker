@@ -103,7 +103,7 @@ export class HomePage {
     watch.subscribe((data) => {
       this.deleteMarkers();
       let updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
-      let image = 'assets/imgs/blue-bike.png';
+      let image = 'assets/imgs/logo.png';
       this.addMarker(updatelocation,image);
       this.setMapOnAll(this.map);
     });
