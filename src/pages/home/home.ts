@@ -23,26 +23,27 @@ export class HomePage {
     // });
   }
   ionViewDidLoad(){
-    console.log('Starting Geolocation');
+    // console.log('Starting Geolocation');
+    this.initMap();
 
-    var options = {
-        enableHighAccuracy: true
-    };
+    // var options = {
+    //     enableHighAccuracy: true
+    // };
 
-    this.geolocation.getCurrentPosition(options)
-    .then((position) => {
-        console.log('Geolocation successful');
+    // this.geolocation.getCurrentPosition(options)
+    // .then((position) => {
+    //     console.log('Geolocation successful');
 
-        // this.currentLocation = {
-            this.lat= position.coords.latitude,
-            this.lng= position.coords.longitude
-        // };
+    //     // this.currentLocation = {
+    //         this.lat= position.coords.latitude,
+    //         this.lng= position.coords.longitude
+    //     // };
 
-        let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
+    //     let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
 
-        // this.updatePlaces(query);
+    //     // this.updatePlaces(query);
 
-    })
+    // })
   }
 
   initMap() {
