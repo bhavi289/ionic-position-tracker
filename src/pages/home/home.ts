@@ -2,6 +2,8 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from '@ionic-native/device';
+import * as firebase from 'Firebase';
+
 declare var google: any;
 
 @Component({
@@ -16,6 +18,7 @@ export class HomePage {
   lat: any;
   lng: any;
   markers = [];
+  ref = firebase.database().ref('geolocations/');  
 
   constructor(public navCtrl: NavController, public platform: Platform, public geolocation: Geolocation, private device: Device) {
     // platform.ready().then(() => {
@@ -88,6 +91,24 @@ export class HomePage {
   deleteMarkers() {
     this.clearMarkers();
     this.markers = [];
+  }
+
+  updateGeolocation(uuid, lat, lng) {
+    if(localStorage.getItem('mykey')) {
+      firebase.database().ref('geolocations/'+localStorage.getItem('mykey')).set({
+        uuid: uuid,
+        latitude: lat,
+        longitude : lng
+      });
+    } else {
+      let newData = this.ref.push();
+      newData.set({
+        uuid: uuid,
+        latitude: lat,
+        longitude: lng
+      });
+      localStorage.setItem('mykey', newData.key);
+    }
   }
 
 }
