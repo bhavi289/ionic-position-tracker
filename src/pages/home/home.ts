@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, Platform } from 'ionic-angular';
+import { NavController, Platform, ToastController, } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from '@ionic-native/device';
@@ -14,13 +14,17 @@ export class HomePage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  lat: any;
+  lng: any;
   markers = [];
   ref = firebase.database().ref('geolocations/');
 
   constructor(public navCtrl: NavController,
     public platform: Platform,
     private geolocation: Geolocation,
-    private device: Device) {
+    private device: Device,
+    public toastCtrl: ToastController
+  ) {
     platform.ready().then(() => {
       this.initMap();
     });
@@ -42,14 +46,39 @@ export class HomePage {
     });
   }
 
+  latLng() {
+    var options = {
+      enableHighAccuracy: true
+    };
+
+  this.geolocation.getCurrentPosition(options)
+  .then((position) => {
+      console.log('Geolocation successful');
+
+      // this.currentLocation = {
+          this.lat= position.coords.latitude,
+          this.lng= position.coords.longitude
+      // };
+
+      // let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
+
+      // this.updatePlaces(query);
+
+    })
+  }
+
   initMap() {
     // this.map = new google.maps.Map(this.mapElement.nativeElement, {
     //   zoom: 7,
     //   center: {lat: 41.85, lng: -87.65}
     // });
-    
+    this.showToast("Inside initMap");          
     this.geolocation.getCurrentPosition().then((resp) => {
-      let mylocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
+      let mylocation = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      this.lat = resp.coords.latitude;
+      this.lng = resp.coords.longitude;
+      this.showToast("Started,"+this.lat+" "+this.lng);      
+      
       this.map = new google.maps.Map(this.mapElement.nativeElement, {
         zoom: 15,
         center: mylocation
@@ -57,6 +86,7 @@ export class HomePage {
     });
     let watch = this.geolocation.watchPosition();
     watch.subscribe((data) => {
+      this.showToast("Changing,"+this.lat+" "+this.lng);            
       this.deleteMarkers();
       this.updateGeolocation(this.device.uuid, data.coords.latitude,data.coords.longitude);
       let updatelocation = new google.maps.LatLng(data.coords.latitude,data.coords.longitude);
@@ -91,6 +121,7 @@ export class HomePage {
   }
 
   updateGeolocation(uuid, lat, lng) {
+    this.showToast("updating geolocation on firebase");                
     if(localStorage.getItem('mykey')) {
       firebase.database().ref('geolocations/'+localStorage.getItem('mykey')).set({
         uuid: uuid,
@@ -107,6 +138,14 @@ export class HomePage {
       localStorage.setItem('mykey', newData.key);
     }
   }
+
+  showToast(response_message:any)
+    {
+        let toast = this.toastCtrl.create({
+            duration: 1000
+        });
+        toast.present();
+    }
 
 }
 
