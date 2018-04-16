@@ -3,6 +3,8 @@ import { NavController, Platform } from 'ionic-angular';
 import * as firebase from 'Firebase';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from '@ionic-native/device';
+import * as firebase from 'Firebase';
+
 
 declare var google: any;
 
@@ -17,13 +19,37 @@ export class HomePage {
   lng: any;
   map: any;
   markers = [];
-  ref = firebase.database().ref('geolocations/');
 
-  constructor(public navCtrl: NavController,
-    public platform: Platform,
-    private geolocation: Geolocation,
-    private device: Device) {
-    platform.ready().then(() => {
+  ref = firebase.database().ref('geolocations/');  
+
+  constructor(public navCtrl: NavController, public platform: Platform, public geolocation: Geolocation, private device: Device) {
+    // platform.ready().then(() => {
+    //   this.initMap();
+    // });
+  }
+  ionViewDidLoad(){
+    // console.log('Starting Geolocation');
+
+    var options = {
+        enableHighAccuracy: true
+    };
+
+    this.geolocation.getCurrentPosition(options)
+    .then((position) => {
+        console.log('Geolocation successful');
+
+        // this.currentLocation = {
+            this.lat= position.coords.latitude,
+            this.lng= position.coords.longitude
+        // };
+
+        let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
+
+        // this.updatePlaces(query);
+
+      })
+
+
       this.initMap();
     });
     this.ref.on('value', resp => {
@@ -45,31 +71,7 @@ export class HomePage {
   }
 
   initMap() {
-    // this.map = new google.maps.Map(this.mapElement.nativeElement, {
-    //   zoom: 7,
-    //   center: {lat: 41.85, lng: -87.65}
-    // });
-
-    var options = {
-      enableHighAccuracy: true
-    };
-
-  this.geolocation.getCurrentPosition(options)
-  .then((position) => {
-      console.log('Geolocation successful');
-
-      // this.currentLocation = {
-          this.lat= position.coords.latitude,
-          this.lng= position.coords.longitude
-      // };
-
-      let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
-
-      // this.updatePlaces(query);
-
-    })
-    
-    this.geolocation.getCurrentPosition().then((resp) => {
+    this.geolocation.getCurrentPosition({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }).then((resp) => {
       let mylocation = new google.maps.LatLng(resp.coords.latitude,resp.coords.longitude);
       this.map = new google.maps.Map(this.mapElement.nativeElement, {
         zoom: 15,

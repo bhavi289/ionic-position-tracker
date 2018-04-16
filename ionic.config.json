@@ -1,6 +1,6 @@
 {
   "name": "position-tracker",
-  "app_id": "",
+  "app_id": "66dc6250",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
