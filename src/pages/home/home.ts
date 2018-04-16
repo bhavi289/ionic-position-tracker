@@ -43,7 +43,7 @@ export class HomePage {
             this.lng= position.coords.longitude
         // };
 
-        let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
+        // let query = '?lat=' + position.coords.latitude + '&lng=' + position.coords.longitude;
 
         // this.updatePlaces(query);
 
