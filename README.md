@@ -1,11 +1,11 @@
-Position Tracker App using Ionic Framework
+<pre>Position Tracker App using Ionic Framework
 
-Using-
--Google Maps Javascript API
+Using
+-Google Maps Javascript API for plotting map
 -Ionic Native Geolocation to get current location of device
-
-For further functionality-
--Configure firebase database to view multiple locations
+-Configure firebase realtime database to view locations of multiple devices
 
 Geolocation does not seem to work while running cordova run android. (not tested for ios yet)
-Use Ionic View Pro or build APK.
+Use Ionic View Pro
+Build APK(not tested)
+</pre>
