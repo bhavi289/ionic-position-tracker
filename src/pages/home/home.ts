@@ -3,7 +3,7 @@ import { NavController, Platform } from 'ionic-angular';
 import * as firebase from 'Firebase';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Device } from '@ionic-native/device';
-import * as firebase from 'Firebase';
+// import * as firebase from 'Firebase';
 
 
 declare var google: any;
@@ -48,27 +48,9 @@ export class HomePage {
         // this.updatePlaces(query);
 
       })
-
-
       this.initMap();
-    });
-    this.ref.on('value', resp => {
-      this.deleteMarkers();
-      snapshotToArray(resp).forEach(data => {
-        if(data.uuid !== this.device.uuid) {
-          let image = 'assets/imgs/green-bike.png';
-          let updatelocation = new google.maps.LatLng(data.latitude,data.longitude);
-          this.addMarker(updatelocation,image);
-          this.setMapOnAll(this.map);
-        } else {
-          let image = 'assets/imgs/blue-bike.png';
-          let updatelocation = new google.maps.LatLng(data.latitude,data.longitude);
-          this.addMarker(updatelocation,image);
-          this.setMapOnAll(this.map);
-        }
-      });
-    });
-  }
+    }
+
 
   initMap() {
     this.geolocation.getCurrentPosition({ maximumAge: 3000, timeout: 5000, enableHighAccuracy: true }).then((resp) => {
