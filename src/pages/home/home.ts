@@ -42,6 +42,8 @@ export class HomePage {
           this.setMapOnAll(this.map);
         } else {
           let image = 'assets/imgs/blue-bike.png';
+          this.position.lat = data.latitude;
+          this.position.lng = data.longitude;  
           let updatelocation = new google.maps.LatLng(data.latitude,data.longitude);
           this.addMarker(updatelocation,image);
           this.setMapOnAll(this.map);
