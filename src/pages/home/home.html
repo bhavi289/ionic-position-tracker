@@ -7,7 +7,13 @@
 </ion-header>
 
 <ion-content padding>
-  Lattutde-{{lat}}
-  longitude-{{lng}}
+    <label>name:
+      <input [(ngModel)]="position.lat" placeholder="latitude">
+    </label>
+    <label>name:
+      <input [(ngModel)]="position.lng" placeholder="longitude">
+    </label>
+  <!-- Lattutde-{{lat}}
+  longitude-{{lng}} -->
   <div #map id="map"></div>
 </ion-content>
