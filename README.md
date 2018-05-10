@@ -1,5 +1,13 @@
 <pre>Position Tracker App using Ionic Framework
 
+npm install --save firebase@4.8.0
+
+ionic cordova plugin add cordova-plugin-geolocation --variable GEOLOCATION_USAGE_DESCRIPTION="To locate you"
+npm install --save @ionic-native/geolocation
+
+ionic cordova plugin add cordova-plugin-device
+npm install --save @ionic-native/device
+
 Using
 -Google Maps Javascript API for plotting map
 -Ionic Native Geolocation to get current location of device
