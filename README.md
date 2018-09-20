@@ -15,5 +15,6 @@ Using
 
 Geolocation does not seem to work while running cordova run android. (not tested for ios yet)
 Use Ionic View Pro
-Build APK(not tested)
+or
+Build APK
 </pre>
